@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+	<version>$version$</version>
+    <id>$id$</id>
+    <title>Kentico Cloud Compose SDK</title>
+    <authors>Kentico Software</authors>
+    <owners>Kentico Software</owners>
+    <licenseUrl>https://github.com/Kentico/delivery-sdk-net/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Kentico/delivery-sdk-net</projectUrl>
+    <iconUrl>http://kentico.com/favicon.ico</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>For more information about Kentico Cloud, see https://kenticocloud.com/.</description>
+    <copyright>Copyright 2017</copyright>
+    <tags>kentico mvc aspnet aspnetmvc</tags>
+  </metadata>
+</package>
