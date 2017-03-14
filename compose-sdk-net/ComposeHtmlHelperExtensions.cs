@@ -2,10 +2,13 @@
 using System.Configuration;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
+
+using KenticoCloud.Compose;
 
 namespace KenticoCloud.Compose
 {
@@ -29,12 +32,12 @@ namespace KenticoCloud.Compose
             HttpClient = CreateHttpClient();
         }
 
-        public static async Task<HtmlString> EditableAreaAsync(this HtmlHelper helper, string areaId, string itemId)
+        public static async Task<HtmlString> EditableAreaAsync(this ExtensionPoint<HtmlHelper> helper, string areaId, string itemId)
         {
             var script = Scripts.Render(Endpoint + ActivationScript);
 
             var url = Endpoint + $"widgets/editablearea?location={ProjectId}:{itemId}:{areaId}";
-            var ct = helper.ViewContext.HttpContext.Request.TimedOutToken;
+            var ct = helper.Target.ViewContext.HttpContext.Request.TimedOutToken;
 
             try
             {
@@ -49,7 +52,7 @@ namespace KenticoCloud.Compose
             }
         }
 
-        public static HtmlString EditableArea(this HtmlHelper helper, string areaId, string itemId)
+        public static HtmlString EditableArea(this ExtensionPoint<HtmlHelper> helper, string areaId, string itemId)
         {
             return helper.EditableAreaAsync(areaId, itemId).Result;
         }
