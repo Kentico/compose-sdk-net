@@ -28,12 +28,23 @@ namespace KenticoCloud.Compose
         {
             ProjectId = GetProjectId();
             PreviewToken = ConfigurationManager.AppSettings["PreviewToken"];
-            Endpoint = ConfigurationManager.AppSettings["ComposeEndpoint"];
+            Endpoint = ConfigurationManager.AppSettings["ComposeEndpoint"] ?? GetDefaultEndPoint();
             HttpClient = CreateHttpClient();
         }
 
         public static async Task<HtmlString> EditableAreaAsync(this ExtensionPoint<HtmlHelper> helper, string areaId, string itemId)
         {
+            if (string.IsNullOrEmpty(areaId))
+            {
+                throw new ArgumentException("Area ID must be a valid identifier.", nameof(areaId));
+            }
+
+            Guid itemGuid;
+            if (!Guid.TryParse(itemId, out itemGuid) || (itemGuid == Guid.Empty))
+            {
+                throw new ArgumentException("Item ID must be a valid Guid.", nameof(areaId));
+            }
+
             var script = Scripts.Render(Endpoint + ActivationScript);
 
             var url = Endpoint + $"widgets/editablearea?location={ProjectId}:{itemId}:{areaId}";
@@ -69,12 +80,24 @@ namespace KenticoCloud.Compose
             return http;
         }
 
+        private static string GetDefaultEndPoint()
+        {
+            return
+                !string.IsNullOrEmpty(PreviewToken) ?
+                    "https://previewkenticocomposedev.global.ssl.fastly.net/" :
+                    "https://kenticocomposedev.global.ssl.fastly.net/";
+        }
+
+
         private static Guid GetProjectId()
         {
             var id = ConfigurationManager.AppSettings["ProjectId"];
             Guid projectId;
 
-            Guid.TryParse(id, out projectId);
+            if (!Guid.TryParse(id, out projectId) || (projectId == Guid.Empty))
+            {
+                throw new InvalidOperationException("Project ID is not configured in app settings. Please add valid ProjectId to the app settings section of your config file.");
+            }
 
             return projectId;
         }
