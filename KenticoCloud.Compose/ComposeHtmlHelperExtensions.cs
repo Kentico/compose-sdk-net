@@ -47,7 +47,7 @@ namespace KenticoCloud.Compose
 
             var script = Scripts.Render(Endpoint + ActivationScript);
 
-            var url = Endpoint + $"widgets/editablearea?location={ProjectId}:{itemId}:{areaId}";
+            var url = Endpoint + $"editablearea?location={ProjectId}:{itemId}:{areaId}";
             var ct = helper.Target.ViewContext.HttpContext.Request.TimedOutToken;
 
             try
