@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Configuration;
+using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
-
-using KenticoCloud.Compose;
 
 namespace KenticoCloud.Compose
 {
@@ -55,12 +53,32 @@ namespace KenticoCloud.Compose
                 var content = await HttpClient.GetAsync(url, ct).ConfigureAwait(false);
                 var html = await content.Content.ReadAsStringAsync().ConfigureAwait(false);
 
-                return new HtmlString(script + html);
+                if (content.IsSuccessStatusCode)
+                {
+                    return new HtmlString(script + html);
+                }
+
+                var message = $"Error getting editable area HTML: {content.ReasonPhrase} ({(int)content.StatusCode})";
+                Debug.WriteLine(message);
+                Debug.WriteLine($"Failed request URL: {url}");
+
+                return new HtmlString(GetErrorHtml(message));
             }
             catch (Exception ex)
             {
-                return new HtmlString(ex.Message);
+                var message = $"Error getting editable area HTML: {ex.Message}";
+
+                Debug.WriteLine(message);
+                Debug.WriteLine($"Failed request URL: {url}");
+                Debug.WriteLine(ex.StackTrace);
+
+                return new HtmlString(GetErrorHtml(message));
             }
+        }
+
+        private static string GetErrorHtml(string message)
+        {
+            return $"<div class=\"fx-component-notloaded\">{message}</div>";
         }
 
         public static HtmlString EditableArea(this ExtensionPoint<HtmlHelper> helper, string areaId, string itemId)
