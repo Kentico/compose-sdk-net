@@ -58,7 +58,7 @@ namespace KenticoCloud.Compose
                     return new HtmlString(script + html);
                 }
 
-                var message = $"Error getting editable area HTML: {content.ReasonPhrase} ({(int)content.StatusCode})";
+                var message = $"Error occurred while rendering editable area: {content.ReasonPhrase} ({(int)content.StatusCode})";
                 Debug.WriteLine(message);
                 Debug.WriteLine($"Failed request URL: {url}");
 
@@ -66,7 +66,7 @@ namespace KenticoCloud.Compose
             }
             catch (Exception ex)
             {
-                var message = $"Error getting editable area HTML: {ex.Message}";
+                var message = $"Error occurred while rendering editable area: {ex.Message}";
 
                 Debug.WriteLine(message);
                 Debug.WriteLine($"Failed request URL: {url}");
