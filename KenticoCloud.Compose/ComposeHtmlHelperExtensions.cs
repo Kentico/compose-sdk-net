@@ -102,8 +102,8 @@ namespace KenticoCloud.Compose
         {
             return
                 !string.IsNullOrEmpty(PreviewToken) ?
-                    "https://previewkenticocomposedev.global.ssl.fastly.net/" :
-                    "https://kenticocomposedev.global.ssl.fastly.net/";
+                    "https://preview-compose.kenticocloud.com/" :
+                    "https://compose.kenticocloud.com/";
         }
 
 
