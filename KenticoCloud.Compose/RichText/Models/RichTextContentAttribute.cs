@@ -14,20 +14,26 @@ namespace KenticoCloud.Compose.RichText
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
     public class RichTextContentAttribute : Attribute, IPropertyValueConverter
     {
-        public object GetPropertyValue(PropertyInfo property, JToken propValue, Func<string, object> getContentItem, IDeliveryClient client)
+        public object GetPropertyValue(PropertyInfo property, JToken elementData, CodeFirstResolvingContext context)
         {
             if (!typeof(IRichTextContent).IsAssignableFrom(property.PropertyType))
             {
                 throw new InvalidOperationException($"Type of property {property.Name} must implement {nameof(IRichTextContent)} in order to receive rich text content.");
             }
 
-            var value = propValue?.ToObject<string>();
-            var links = ((JObject)propValue?.Parent?.Parent)?.Property("links")?.Value;
+            var element = ((JObject)elementData);
+            if (element == null)
+            {
+                return null;
+            }
+
+            var links = element.Property("links")?.Value;
+            var value = element.Property("value")?.Value?.ToObject<string>();
 
             // Handle rich_text link resolution
-            if (links != null && propValue != null && client.ContentLinkUrlResolver != null)
+            if (links != null && elementData != null && context.Client.ContentLinkUrlResolver != null)
             {
-                value = new ContentLinkResolver(client.ContentLinkUrlResolver).ResolveContentLinks(value, links);
+                value = new ContentLinkResolver(context.Client.ContentLinkUrlResolver).ResolveContentLinks(value, links);
             }
 
             var blocks = new List<IRichTextBlock>();
@@ -38,7 +44,7 @@ namespace KenticoCloud.Compose.RichText
                 if (block.TagName?.Equals("object", StringComparison.OrdinalIgnoreCase) == true && block.GetAttribute("type") == "application/kenticocloud" && block.GetAttribute("data-type") == "item")
                 {
                     var codename = block.GetAttribute("data-codename");
-                    blocks.Add(new InlineContentItem { ContentItem = getContentItem(codename) });
+                    blocks.Add(new InlineContentItem { ContentItem = context.GetModularContentItem(codename) });
                 }
                 else if (block.TagName?.Equals("figure", StringComparison.OrdinalIgnoreCase) == true)
                 {

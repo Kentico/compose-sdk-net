@@ -1,7 +1,7 @@
-﻿using KenticoCloud.Compose.RichText.Models;
-using System;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using System.Web.Mvc.Html;
+
+using KenticoCloud.Compose.RichText.Models;
 
 namespace KenticoCloud.Compose.RichText.Resolvers
 {
@@ -16,14 +16,7 @@ namespace KenticoCloud.Compose.RichText.Resolvers
 
         public string Resolve(HtmlHelper helper, ResolvedInlineData<T> data)
         {
-            try
-            {
-                return helper.Partial(_viewName, data.Data).ToHtmlString();
-            }
-            catch (Exception ex)
-            {
-                return $"Failed to resolve inline content of type {data.Data.GetType().Name}. {ex.Message}";
-            }
+            return helper.Partial(_viewName, data.Data).ToHtmlString();
         }
     }
 }

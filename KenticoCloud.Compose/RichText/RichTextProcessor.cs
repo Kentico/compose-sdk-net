@@ -1,7 +1,9 @@
-﻿using KenticoCloud.Compose.RichText.Models;
-using KenticoCloud.Compose.RichText.Resolvers;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Text;
+
+using KenticoCloud.Compose.RichText.Models;
+using KenticoCloud.Compose.RichText.Resolvers;
 
 namespace KenticoCloud.Compose.RichText
 {
@@ -19,13 +21,26 @@ namespace KenticoCloud.Compose.RichText
 
         internal string ResolveModular(THelper helper, IInlineContentItem modular)
         {
-            Func<THelper, object, string> resolver;
-            if ((modular.ContentItem != null) && _typeResolver.TryGetValue(modular.ContentItem.GetType(), out resolver))
+            try
             {
-                return resolver(helper, modular.ContentItem);
-            }
+                Func<THelper, object, string> resolver;
+                if ((modular.ContentItem != null) && _typeResolver.TryGetValue(modular.ContentItem.GetType(), out resolver))
+                {
+                    return resolver(helper, modular.ContentItem);
+                }
 
-            return DefaultTypeResolver?.Resolve(helper, new ResolvedInlineData<object> { Data = modular.ContentItem });
+                return DefaultTypeResolver?.Resolve(helper, new ResolvedInlineData<object> { Data = modular.ContentItem });
+            }
+            catch (Exception ex)
+            {
+                var message = new StringBuilder($"Failed to resolve inline content of type { modular.ContentItem?.GetType()?.Name }.");
+                while (ex != null)
+                {
+                    message.AppendLine(ex.Message);
+                    ex = ex.InnerException;
+                }
+                return message.ToString();
+            }
         }
 
         public void RegisterTypeResolver<T>(IInlineContentResolver<THelper, T> resolver)

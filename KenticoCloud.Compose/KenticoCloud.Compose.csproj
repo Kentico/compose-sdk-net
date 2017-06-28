@@ -80,6 +80,7 @@
     <Compile Include="RichText\Models\IRichTextBlock.cs" />
     <Compile Include="RichText\Models\IRichTextContent.cs" />
     <Compile Include="RichText\Models\ResolvedInlineData.cs" />
+    <Compile Include="RichText\Resolvers\ChildActionResolver.cs" />
     <Compile Include="RichText\Resolvers\PartialViewResolver.cs" />
     <Compile Include="RichText\RichTextHtmlHelperExtensions.cs" />
     <Compile Include="ComposeHtmlHelperExtensions.cs" />
