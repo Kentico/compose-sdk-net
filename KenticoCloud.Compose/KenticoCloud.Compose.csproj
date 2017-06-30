@@ -44,6 +44,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -67,27 +68,29 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="RichText\Models\HtmlContent.cs" />
-    <Compile Include="RichText\Models\InlineContentItem.cs" />
-    <Compile Include="RichText\Models\InlineImage.cs" />
+    <Compile Include="RichText\Models\Attributes\DisableHtmlEncodeAttribute.cs" />
+    <Compile Include="RichText\Models\Blocks\HtmlContent.cs" />
+    <Compile Include="RichText\Models\Blocks\InlineContentItem.cs" />
+    <Compile Include="RichText\Models\Blocks\InlineImage.cs" />
     <Compile Include="RichText\Models\RichTextContent.cs" />
+    <Compile Include="RichText\Models\Attributes\UseDisplayTemplateAttribute.cs" />
     <Compile Include="RichText\Resolvers\DefaultImageResolver.cs" />
-    <Compile Include="RichText\Models\RichTextContentAttribute.cs" />
-    <Compile Include="RichText\Models\IHtmlContent.cs" />
+    <Compile Include="RichText\Models\Attributes\RichTextContentAttribute.cs" />
+    <Compile Include="RichText\Models\Blocks\IHtmlContent.cs" />
     <Compile Include="RichText\Resolvers\IInlineContentResolver.cs" />
-    <Compile Include="RichText\Models\IInlineImage.cs" />
-    <Compile Include="RichText\Models\IInlineContentItem.cs" />
-    <Compile Include="RichText\Models\IRichTextBlock.cs" />
+    <Compile Include="RichText\Models\Blocks\IInlineImage.cs" />
+    <Compile Include="RichText\Models\Blocks\IInlineContentItem.cs" />
+    <Compile Include="RichText\Models\Blocks\IRichTextBlock.cs" />
     <Compile Include="RichText\Models\IRichTextContent.cs" />
     <Compile Include="RichText\Models\ResolvedInlineData.cs" />
     <Compile Include="RichText\Resolvers\ChildActionResolver.cs" />
     <Compile Include="RichText\Resolvers\PartialViewResolver.cs" />
-    <Compile Include="RichText\RichTextHtmlHelperExtensions.cs" />
+    <Compile Include="RichText\Helpers\RichTextHtmlHelperExtensions.cs" />
     <Compile Include="ComposeHtmlHelperExtensions.cs" />
     <Compile Include="ExtensionPoint.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RichText\RichTextProcessor.cs" />
+    <Compile Include="RichText\Helpers\RichTextProcessor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

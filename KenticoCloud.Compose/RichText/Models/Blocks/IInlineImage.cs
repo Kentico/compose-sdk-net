@@ -1,4 +1,6 @@
-﻿namespace KenticoCloud.Compose.RichText.Models
+﻿using System.Web;
+
+namespace KenticoCloud.Compose.RichText.Models
 {
     public interface IInlineImage : IRichTextBlock
     {

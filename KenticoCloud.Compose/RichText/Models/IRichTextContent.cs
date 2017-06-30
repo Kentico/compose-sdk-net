@@ -2,7 +2,7 @@
 
 namespace KenticoCloud.Compose.RichText.Models
 {
-    public interface IRichTextContent
+    public interface IRichTextContent : IEnumerable<IRichTextBlock>
     {
         IEnumerable<IRichTextBlock> Blocks { get; set; }
     }

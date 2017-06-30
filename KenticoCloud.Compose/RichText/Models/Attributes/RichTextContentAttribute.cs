@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Reflection;
-
-using KenticoCloud.Delivery;
-
-using Newtonsoft.Json.Linq;
-using KenticoCloud.Compose.RichText.Models;
-using AngleSharp.Parser.Html;
 using System.Collections.Generic;
 using System.Linq;
+
+using KenticoCloud.Delivery;
+using KenticoCloud.Compose.RichText.Models;
+
+using Newtonsoft.Json.Linq;
+using AngleSharp.Parser.Html;
 
 namespace KenticoCloud.Compose.RichText
 {
