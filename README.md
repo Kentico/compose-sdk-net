@@ -7,4 +7,4 @@
 
 ## Summary
 
-The Kentico Cloud Compose .NET SDK is a client library used for adding and managing Editable areas on you page. You can use the SDK in the form of a [NuGet package](https://www.nuget.org/packages/KenticoCloud.Compose).
+The Kentico Cloud Compose .NET SDK is a client library used for adding and managing Editable areas on you page. You can consume the SDK in the form of a [NuGet package](https://www.nuget.org/packages/KenticoCloud.Compose).
